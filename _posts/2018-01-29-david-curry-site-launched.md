@@ -10,14 +10,14 @@ The last few years have seen an explosion in our collective conversations concer
 
 In relation to my own data science experiences, text analysis is an unexplored phase space.  This makes an anaylsis of fake news both timely and relevant.  At a first glance, I realize this project will not be perfect in its scope or results, but that is ok.  The main metric for usefulness will be the learning experience with text classificaton, and how a simple, naive model performs this task of fake news classification.  This process will be a springboard for more complex text-based analysis, which is encapsulated in the idiom: you must learn to walk before you can run.
 
-### Initial model
+## Initial model
 Naive Bayes Classifier using count vectorized word embeddings.
 
-### Data
+## Data
 Fake news will be taken from Kaggle's public repository here:  https://www.kaggle.com/mrisdal/fake-news.  
 Real news articles is "scraped" from a news aggretor: https://www.allsides.com/, as well as traditional sources such as CNN, NYT, FOX, and WAPO.  Please see the separate notebook for scraping of real news text: https://github.com/dcurry09/FakeNews_Classifier/blob/master/Scraper_RealNews.ipynb
 
-### A few exploratory exercises on the Kaggle fake news dataset and scraped real news.
+## A few exploratory exercises on the Kaggle fake news dataset and scraped real news.
 
 We will begin by looking at relationships among a few of the non-text features(likes, comments, URL, etc).  Before any initial training is done we should always become familair with our dataset.  We will tokenize the text and look at word frequency and semantic relationships using Word2Vec.
 

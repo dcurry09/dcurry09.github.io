@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "David Curry, Launches Site"
+title: "NLP First Look"
 date: 2018-01-29
 ---
 

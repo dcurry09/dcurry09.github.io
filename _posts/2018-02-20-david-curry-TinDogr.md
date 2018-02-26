@@ -10,11 +10,16 @@ To achieve automatic matching of Tinders users based on the presence of certain 
 
 ## The Frozen Layer: VGG-16
 ![Alt text](images/vgg16.png?raw=true "Title")
+
 Developed in 2014, the VGG-16 CNN utlizes successive 3x3 filters and max pooling layers with two fully connected layers which handle the classification for features extracted from the convolutions step ([paper link](https://arxiv.org/pdf/1409.1556v6.pdf)).  Each filter acts an "edge detetcor of sorts:  identyfing outlines and areas of color/shade transitions.  The max pooling layers greatly reduce the dimensionality of the input, and thus the parameters needed to be learned.  The result of the convolution and max pooling layers can be thought of as a new set of features, often refered to as the "bottleneck" features. For our task of image classification and transfer learning these bottle neck features are very important.  To understand why, let's look at the final fully connected layers and remind ourselves how classification tasks are performed.
 
 In isolation, the two fully connected(FC) layers and the final softmax output layer are nothing more than a shallow, multilayer perceptron(MLP) built for multiclass classification.  What we enter into the MLP is nothing but the features of the image classes we are trying to learn.  Tradionally this is visualized by the two parameter and class toy model below, which demonstrates the MLP's goal of learning the decision boundary necessary for classification.
+
 ![Alt text](images/classification.png?raw=true "Title")
 
+The red and green classes above, which are separated in parameter space, are our bottleneck features.  Given a set of images classes, such as dog breeds, the VGG-16 will learn the distingushing features from the different dog breeds and encode this information into the bottleneck features.  What the network has done is taken an image and by examined it at different scales for the features that best describe it.  The network then takes these bottleneck features and simply passes it to an MLP tuned to classify a set of input features.
+
+Now turning back to the original goal of this post-building a model that classifies dog breeds and integrates it into the Tinder app-I might be tempted to take the following approach:  build my own VGG-16 network (the architecture is widely available) and then use it to build a dog breed classifier.  However, this path is fraught with challenges.  The original VGG-16 team (Karen Simonyan and Andrew Zisserman of the University of Oxford) took two to three weeks!  And this is with access to GPUs!  I am limited by time (the TinDogr project needs to be wrapped up in its' entirety in two weeks) and by computation (a macbook pro with boring, old CPUs will be jandling all model computations). 
 
 
 

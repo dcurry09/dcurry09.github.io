@@ -85,7 +85,7 @@ def train_test_dir_split(root_dir, percent_train):
 ```
 
 ## Data Augmentation and Keras Generators
-Now that I have train and validation datasets created I can use data augmentation to increase the number of images per class.  Luckily Keras has the ImageDataGenerator class, which handles the import, augment, and general flow of images through thr VGG-16 network.  Below is the code for importing the pre-trained VGG-16 weights and creating the bottleneck features (data augmentation is part of the pipeline thanks to Keras).
+Now that I have train and validation datasets created I can use data augmentation to increase the number of images per class.  Luckily Keras has the ImageDataGenerator class, which handles the import, augment, and general flow of images through thr VGG-16 network.  Below is the code for importing the pre-trained VGG-16 weights and creating the bottleneck features (data augmentation is part of the pipeline thanks to Keras).  The full script can be seen [here](https://github.com/dcurry09/TinDogr/blob/master/python/train_CNN_script.py).
 
 ```python
 def save_bottleneck_features():
@@ -172,6 +172,10 @@ def train_top_model(train_data, train_Y, test_data, test_Y):
 
 ```
 
+Keras has made the transfer learning technique straightforward and flexible.  What I have shown so far is only half the battle however.  We may have built a dog breed classifier, but it still need to be integrated into the Tinder dating app ecosystem.
+
+## Putting Everything Online
+The API I will be using to connect to Tinder is called Pynder and can be accessed on Github [here](https://github.com/charliewolf/pynder).  Flask and AWS will be used to create and host TinDogr repsectively.  
 
 
 

@@ -46,11 +46,43 @@ Images
     │   file022.txt
     │   ...
 ```
-Below is a short script that creates train and test directories with a specified % split of photos for each breed.
+Below is a short function that creates train and test directories with a specified % split of photos for each breed.
 
 ```python
-for i in fold:
+def train_test_dir_split(root_dir, percent_train):
+    '''
+    Takes in a single root dir of image classes and splits into test and train root dirs.
+    Specify the percent split that each class/sub-dir should have(one % for whole set)
+    '''
 
+    train_dir = root_dir+'/train/'
+    test_dir  = root_dir+'/test/'
+    my_dirs = [i for i in os.listdir(root_dir)]
+     
+    # make if not present
+    if not os.path.isdir(root_dir+'/train/'):
+    	os.system('mkdir '+train_dir)
+        os.system('mkdir '+test_dir) 
+    
+    for i,my_dir in enumerate(my_dirs):
+        file_list = [name for name in os.listdir(root_dir+my_dir)]
+        num_files = len(file_list)
+       
+        if not os.path.isdir(root_dir+'/train/'+my_dir):
+            os.system('mkdir '+train_dir+my_dir)
+            os.system('mkdir '+test_dir+my_dir)
+
+        # get fraction
+        test_frac = 1-percent_train
+    	test_num = int(len(file_list)*test_frac)
+    
+        # cp test/train files to test dir
+	   	for i,file in enumerate(file_list
+            if i < test_num:
+                os.system('cp '+root_dir+my_dir+'/'+file+' '+test_dir+my_dir)
+            else:
+                os.system('cp '+root_dir+my_dir+'/'+file+' '+train_dir+my_dir)        
+        
 ```
 
 

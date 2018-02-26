@@ -34,17 +34,24 @@ What is important here is that none of the weights in the convolution layers are
 The Stanford machine learning repository is the source of our training data: 120 dog breeds spread over ~20 thousand photos.  It's important to note that some breeds contain much more data than others(the max class has ~350 photos, while the min class has ~50 photos).  Neural networks are notoriously "hungry" in that they need lots of data to perform well.  Current wisdom places the number at ~2K images per class in order to achieve acceptable classification accuracy.  We will address this data deficiency by generating more training data with data augmentation techniques, but before that we must split the data into train and validation sets.
 
 ### Creating the Training and Validation Datasets
-Data is currently sitting in one folder with the structure:
-Images/
-      /dog breed 1
-                /image1.png
-                /image2.png
-      /dog breed 1          
-                
-'''python
+Data is currently has the structure:
+```
+Images   
+└───dog breed folder1
+│   │   file011.png
+│   │   file012.png
+│   │   ...
+└───dog breed folder2
+    │   file021.txt
+    │   file022.txt
+    │   ...
+```
+Below is a short script that creates train and test directories with a specified % split of photos for each breed.
 
-'''
+```python
+for i in fold:
 
+```
 
 
 

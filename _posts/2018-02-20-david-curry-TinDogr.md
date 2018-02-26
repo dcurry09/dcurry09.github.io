@@ -4,7 +4,7 @@ title: "Image Detetcion with Transfer Learning: Under the hood of TinDogr"
 date: 2018-02-20
 ---
 
-# Image Detetcion with Transfer Learning and Convolutional Neural Networks: Under the hood of TinDogr
+# Image Detection with Transfer Learning and Convolutional Neural Networks: Under the hood of TinDogr
 
 To achieve automatic matching of Tinders users based on the presence of certain dog breeds in their profiles, we have to enter the field of image classification.  Ever since the seminole paper on image classification using convolutional neural networks (CNNs) was released in 2012 ([paper link](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)), this class of algorithims have been the clear leader in the field.  Dubbed "AlexNet", Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton created a “large, deep convolutional neural network” that achieved a winning 15.4% error at the 2012 ILSVRC (ImageNet Large-Scale Visual Recognition Challenge).  For context, the closest competitor was at a measly 26.3% error!  TinDogr's patented "Dogorithm" utilizes the proven power of CNNs to detect and classify 120 dog breeds and to use this classification scheme to connect dog owners together on the Tinder dating app.  
 
@@ -138,8 +138,39 @@ def save_bottleneck_features():
 	return bottleneck_features_train, bottleneck_features_test, train_y, train_labels, test_y
 
 ```
+The bottleneck features for our dog breed classes have now been created and saved for future use.  Besides having these features for visualization and exploration, I also have reduced the time it will take to optimize the next step: the transfer of the bottleneck features to the fully connected classification layers.  If we had not saved the bottleneck features ahead of time then I have had to pass each image through the VGG-16 conv layers during each stage of optimization.
+
+## Fully Connected Layers
+Now I will create shallow MLP and plug the output of the VGG-16 (the bottleneck features) into the input of my new layers.
 
 
+```python
+def train_top_model(train_data, train_Y, test_data, test_Y):
+   ''' Training of FC layers with bottleneck features as inputs
+   '''
+   model = Sequential()
+   model.add(Flatten(input_shape = train_data.shape[1:]))
+   model.add(Dense(2056, activation='relu'))
+   model.add(Dropout(0.2))
+   model.add(Dense(1028, activation='relu'))
+   model.add(Dense(NUM_CLASSES, activation='softmax'))
+
+   opt = optimizers.SGD(lr=0.01)
+   model.compile(optimizer = opt,
+                 loss='categorical_crossentropy',
+                 metrics=['accuracy'])
+
+   checkpointer = ModelCheckpoint(filepath='model.best.hdf5', verbose=1, save_best_only=False)
+
+   model.fit(train_data, train_Y,
+             epochs=epochs,
+             batch_size=batch_size,
+             validation_data = [test_data, test_Y],
+             callbacks = [checkpointer])
+
+   model.save_weights(top_model_weights_path)
+
+```
 
 
 

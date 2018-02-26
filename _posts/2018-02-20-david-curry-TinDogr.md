@@ -8,7 +8,7 @@ date: 2018-02-20
 
 To achieve automatic matching of Tinders users based on the presence of certain dog breeds in their profiles, we have to enter the field of image classification.  Ever since the seminole paper on image classification using convolutional neural networks (CNNs) was released in 2012 ([paper link](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)), this class of algorithims have been the clear leader in the field.  Dubbed "AlexNet", Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton created a “large, deep convolutional neural network” that achieved a winning 15.4% error at the 2012 ILSVRC (ImageNet Large-Scale Visual Recognition Challenge).  For context, the closest competitor was at a measly 26.3% error!  TinDogr's patented "Dogorithm" utilizes the proven power of CNNs to detect and classify 120 dog breeds and to use this classification scheme to connect dog owners together on the Tinder dating app.  
 
-This blog post will first explore the CNN architecture and how transfer learning extends the monumental work of past image detection teams.  The second part of this post will cover my implementation usin Keras and Tensorflow in Python.
+This blog post will first explore the CNN architecture and how transfer learning extends the monumental work of past image detection teams.  The second part of this post will cover my implementation using Keras and Tensorflow in Python.
 
 ## The Frozen Layer: VGG-16
 ![Alt text](images/vgg16.png?raw=true "Title")
@@ -30,7 +30,20 @@ If we take a look back at the VGG-16 architecture and the discussion on bottlene
 
 What is important here is that none of the weights in the convolution layers are adjusted.  Back propagation is only applied to the last FC layers and thus training time is greatly decreased.  To recap, our stated goal is image classification of over 100 dog breeds.  Convolutional neural networks are currently the model best suited to this task, but training time of the most effective models can often exceed a week, even with the full power of multiple GPUs.  A transfer learning technique with the successful VGG-16 pre-trained weights is employed in order create a robust dog breed image classifier.  I know turn to a discussion of the code and pipeline used for TinDogr.
 
+## Importing the data
+The Stanford machine learning repository is the source of our training data: 120 dog breeds spread over ~20 thousand photos.  It's important to note that some breeds contain much more data than others(the max class has ~350 photos, while the min class has ~50 photos).  Neural networks are notoriously "hungry" in that they need lots of data to perform well.  Current wisdom places the number at ~2K images per class in order to achieve acceptable classification accuracy.  We will address this data deficiency by generating more training data with data augmentation techniques, but before that we must split the data into train and validation sets.
 
+### Creating the Training and Validation Datasets
+Data is currently sitting in one folder with the structure:
+Images/
+      /dog breed 1
+                /image1.png
+                /image2.png
+      /dog breed 1          
+                
+'''python
+
+'''
 
 
 

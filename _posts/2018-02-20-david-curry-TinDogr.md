@@ -82,7 +82,61 @@ def train_test_dir_split(root_dir, percent_train):
                 os.system('cp '+root_dir+my_dir+'/'+file+' '+test_dir+my_dir)
             else:
                 os.system('cp '+root_dir+my_dir+'/'+file+' '+train_dir+my_dir)        
-        
+```
+
+## Data Augmentation and Keras Generators
+Now that I have train and validation datasets created I can use data augmentation to increase the number of images per class.  Luckily Keras has the ImageDataGenerator class, which handles the import, augment, and general flow of images through thr VGG-16 network.  Below is the code for importing the pre-trained VGG-16 weights and creating the bottleneck features (data augmentation is part of the pipeline thanks to Keras).
+
+```python
+def save_bottleneck_features():
+        ''' Saves bottleneck features for test/train sets for use later on.
+            Separating this step speeds up later optimization.
+        '''
+	model = applications.VGG16(weights = 'imagenet', include_top = False)
+
+	datagen = ImageDataGenerator(
+            rescale=1./255,
+            rotation_range = 40,
+            width_shift_range = 0.2,
+            height_shift_range = 0.2,
+            shear_range = 0.2,
+            zoom_range = 0.2,
+	 )
+
+	train_generator = datagen.flow_from_directory(
+           train_data_dir,
+           target_size = (IMG_SIZE, IMG_SIZE),
+           batch_size = batch_size,
+   	   shuffle = False
+	)
+	
+	test_generator = datagen.flow_from_directory(
+           test_data_dir,
+           target_size = (IMG_SIZE, IMG_SIZE),
+           batch_size = batch_size,
+           class_mode = None,
+           shuffle = False
+	)
+	
+	# Do not retrain if already present
+	if not os.path.isfile('weights/bottleneck_features_train.npy'):
+            bottleneck_features_train = model.predict_generator(train_generator, train_samples//batch_size, verbose=1)
+	    bottleneck_features_test = model.predict_generator(test_generator, test_samples//batch_size, verbose=1)		    np.save(open('weights/bottleneck_features_train.npy','wb'), bottleneck_features_train)
+	    np.save(open('weights/bottleneck_features_test.npy','wb'), bottleneck_features_test)
+        else:
+            bottleneck_features_train = np.load('weights/bottleneck_features_train.npy')
+            bottleneck_features_test = np.load('weights/bottleneck_features_test.npy')
+
+        # I will also need the target classes and labels for post-bottleneck training
+	train_y = to_categorical(train_generator.classes)
+        test_y = to_categorical(test_generator.classes)
+        train_labels = train_generator.class_indices
+        np.save(open('weights/train_y.npy','wb'), train_y)
+        np.save(open('weights/train_labels.npy','wb'), train_labels)
+        np.save(open('weights/test_y.npy','wb'), test_y)
+    
+	return bottleneck_features_train, bottleneck_features_test, train_y, train_labels, test_y
+
 ```
 
 

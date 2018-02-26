@@ -8,7 +8,7 @@ date: 2018-02-20
 
 To achieve automatic matching of Tinders users based on the presence of certain dog breeds in their profiles, we have to enter the field of image classification.  Ever since the seminole paper on image classification using convolutional neural networks (CNNs) was released in 2012 ([paper link](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)), this class of algorithims have been the clear leader in the field.  Dubbed "AlexNet", Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton created a “large, deep convolutional neural network” that achieved a winning 15.4% error at the 2012 ILSVRC (ImageNet Large-Scale Visual Recognition Challenge).  For context, the closest competitor was at a measly 26.3% error!  TinDogr's patented "Dogorithm" utilizes the proven power of CNNs to detect and classify 120 dog breeds and to use this classification scheme to connect dog owners together on the Tinder dating app.  
 
-This blog post will first explore the CNN architecture and how transfer learning extends the monumental work of past image detection teams.  The second part of this post will cover my implementation using Keras and Tensorflow in Python.
+This blog post will first explore the CNN architecture and how transfer learning extends the monumental work of past image detection teams.  The second part of this post will cover my implementation using Keras and Tensorflow in Python and can be seen in Github [here](https://github.com/dcurry09/TinDogr/tree/master/python).
 
 ## The Frozen Layer: VGG-16
 ![Alt text](images/vgg16.png?raw=true "Title")
@@ -182,3 +182,6 @@ The API I will be using to connect to Tinder is called Pynder and can be accesse
 3) For each user inspect each profile image for a dog
 4) Classify any dogs present, assign a size, and compare to your dogs size
 5) Swipe right(left) if dog breed is(not) compatible size
+
+A video of the full TinDogr "Dogorithm" can be seen on my [website](http://www.tindogr.club/).  So far I have autoswiped on hundreds of dog users and even recieved a number of "swipe backs" when I also post a dog image on my account.
+

@@ -12,8 +12,8 @@ To achieve automatic matching of Tinders users based on the presence of certain 
 ![Alt text](images/vgg16.png?raw=true "Title")
 Developed in 2014, the VGG-16 CNN utlizes successive 3x3 filters and max pooling layers with two fully connected layers which handle the classification for features extracted from the convolutions step ([paper link](https://arxiv.org/pdf/1409.1556v6.pdf)).  Each filter acts an "edge detetcor of sorts:  identyfing outlines and areas of color/shade transitions.  The max pooling layers greatly reduce the dimensionality of the input, and thus the parameters needed to be learned.  The result of the convolution and max pooling layers can be thought of as a new set of features, often refered to as the "bottleneck" features. For our task of image classification and transfer learning these bottle neck features are very important.  To understand why, let's look at the final fully connected layers and remind ourselves how classification tasks are performed.
 
-In isolation, the two fully connected(FC) layers and the final softmax output layer are nothing more than a shallow, multilayer perceptron(MLP) built for multiclass classification.  What we enter into the MLP is nothing but the features of the image classes we are trying to learn.  Tradionally this is visualized by the 2-D toy model below, which demonstrates the MLP's goal of learning the decision boundary necessary for classification.
-![Alt text](images/vgg16.png?raw=true "Title")
+In isolation, the two fully connected(FC) layers and the final softmax output layer are nothing more than a shallow, multilayer perceptron(MLP) built for multiclass classification.  What we enter into the MLP is nothing but the features of the image classes we are trying to learn.  Tradionally this is visualized by the two parameter and class toy model below, which demonstrates the MLP's goal of learning the decision boundary necessary for classification.
+![Alt text](images/classification.png?raw=true "Title")
 
 
 

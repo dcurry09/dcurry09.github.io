@@ -175,13 +175,10 @@ def train_top_model(train_data, train_Y, test_data, test_Y):
 Keras has made the transfer learning technique straightforward and flexible.  What I have shown so far is only half the battle however.  We may have built a dog breed classifier, but it still need to be integrated into the Tinder dating app ecosystem.
 
 ## Putting Everything Online
-The API I will be using to connect to Tinder is called Pynder and can be accessed on Github [here](https://github.com/charliewolf/pynder).  Flask and AWS will be used to create and host TinDogr repsectively.  
+The API I will be using to connect to Tinder is called Pynder and can be accessed on Github [here](https://github.com/charliewolf/pynder).  Flask and AWS will be used to create and host TinDogr repsectively.  The main Flask script can be seen on Github [here](https://github.com/dcurry09/TinDogr/blob/master/python/flaskr.py).  The work flow for detection of a compatible dog breed and automatic swiping is:
 
-
-
-
-
-
-
-
-
+1) Connect to Tinder using your Facebook credentials
+2) Scan area for all Tinder users with matching criteria(age, gender, distance)
+3) For each user inspect each profile image for a dog
+4) Classify any dogs present, assign a size, and compare to your dogs size
+5) Swipe right(left) if dog breed is(not) compatible size
